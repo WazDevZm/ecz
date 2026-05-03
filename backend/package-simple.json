@@ -1,0 +1,20 @@
+{
+  "name": "zedpulse-backend-simple",
+  "version": "1.0.0",
+  "description": "Simplified backend for ZedPulse (no database required)",
+  "main": "src/server-simple.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server-simple.js",
+    "start": "node src/server-simple.js"
+  },
+  "keywords": ["elections", "sentiment", "zambia"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "socket.io": "^4.6.1"
+  }
+}

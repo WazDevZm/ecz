@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:6
+    container_name: zedpulse-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: zedpulse
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - zedpulse-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: zedpulse-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/zedpulse
+      - JWT_SECRET=your-secret-key-change-in-production
+      - SENTIMENT_SERVICE_URL=http://sentiment-service:8000
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+      - sentiment-service
+    networks:
+      - zedpulse-network
+
+  # Sentiment Analysis Service
+  sentiment-service:
+    build:
+      context: ./sentiment-service
+      dockerfile: Dockerfile
+    container_name: zedpulse-sentiment
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - MODEL_NAME=cardiffnlp/twitter-roberta-base-sentiment
+    networks:
+      - zedpulse-network
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: zedpulse-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+      - VITE_SOCKET_URL=http://localhost:5000
+    depends_on:
+      - backend
+    networks:
+      - zedpulse-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  zedpulse-network:
+    driver: bridge
