@@ -1,0 +1,11 @@
+node_modules
+.env
+.env.local
+.git
+.DS_Store
+*.log
+frontend/node_modules
+backend/node_modules
+sentiment-service/venv
+sentiment-service/__pycache__
+.next/cache
