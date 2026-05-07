@@ -92,6 +92,27 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
+## Deployment
+
+### Deploy to Vercel (Recommended for Frontend)
+
+The easiest way to deploy this application is using Vercel:
+
+1. **Quick Deploy** (5 minutes): See [QUICK_DEPLOY.md](./QUICK_DEPLOY.md)
+2. **Full Guide**: See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)
+3. **Checklist**: Use [VERCEL_CHECKLIST.md](./VERCEL_CHECKLIST.md)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/zedpulse)
+
+**Important**: Vercel serverless functions don't support WebSockets. For full real-time features, deploy the backend separately to Railway, Render, or Heroku.
+
+### Alternative Deployment Options
+
+- **Docker**: Use the included `docker-compose.yml`
+- **Railway**: Great for the backend with Socket.io support
+- **Render**: Free tier available for backend deployment
+- **Heroku**: Traditional PaaS option
+
 ### Using Docker
 
 ```bash
